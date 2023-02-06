@@ -21,6 +21,7 @@ public class Author {
     private String firstName;
     private String lastName;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 

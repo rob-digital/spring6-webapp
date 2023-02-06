@@ -20,6 +20,7 @@ public class Publisher {
     private Long id;
     private String name;
 
+    @Builder.Default
     @OneToMany(mappedBy = "publisher")
     private Set<Book> books = new HashSet<>();
 }

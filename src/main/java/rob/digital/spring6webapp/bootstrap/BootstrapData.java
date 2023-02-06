@@ -1,7 +1,5 @@
 package rob.digital.spring6webapp.bootstrap;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -45,13 +43,24 @@ public class BootstrapData implements CommandLineRunner {
 
         var savedPublisher = publisherRepository.save(publisher);
 
+        savedBookHyperion.setPublisher(savedPublisher);
+        savedBookInstitute.setPublisher(savedPublisher);
 
         // !!! this builds association between entities, between Author and Books
-
+        // add @Builder.Default to the property of the class (domain or model) that is using Set => "Set<Book> books = new HashSet<>()"
+        // if you're using builder
         savedDanAuthor.getBooks().add(savedBookHyperion);
         savedStephenAuthor.getBooks().add(savedBookInstitute);
         savedBookHyperion.getAuthors().add(savedDanAuthor);
         savedBookInstitute.getAuthors().add(savedStephenAuthor);
+
+//        savedPublisher.getBooks().add(savedBookInstitute);
+//        savedPublisher.getBooks().add(savedBookHyperion);
+
+        authorRepository.save(savedDanAuthor);
+        authorRepository.save(savedStephenAuthor);
+        bookRepository.save(savedBookHyperion);
+        bookRepository.save(savedBookInstitute);
 
 
         System.out.println("===== Inside of Bootstrap =======");
@@ -60,7 +69,7 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("Publisher has published => " + bookRepository.count() + " books");
 
 
-        System.out.println(savedDanAuthor.toString());
+//        System.out.println(savedDanAuthor.toString());
         System.out.println("Publisher name is -> " + savedPublisher);
 
 
